@@ -1,5 +1,5 @@
 """
-StockSense — Warren Buffett-style stock analyzer
+FundaScore — Warren Buffett-style stock analyzer
 Run with: streamlit run app.py
 """
 
@@ -39,7 +39,7 @@ BUFFETT_QUOTES = [
 # PAGE CONFIG
 # ─────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="StockSense",
+    page_title="FundaScore",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -487,7 +487,7 @@ def make_pdf(company, ticker, vtext, vscore, criteria_results, ts):
     pdf.set_auto_page_break(auto=True, margin=15)
 
     pdf.set_font("Helvetica", "B", 20)
-    pdf.cell(0, 12, "StockSense - Stock Analysis Report", ln=True, align="C")
+    pdf.cell(0, 12, "FundaScore - Stock Analysis Report", ln=True, align="C")
     pdf.set_font("Helvetica", "", 11)
     pdf.cell(0, 7, _p(f"{company} ({ticker.upper()})  -  {ts}"), ln=True, align="C")
     pdf.ln(4)
@@ -523,7 +523,7 @@ def make_pdf(company, ticker, vtext, vscore, criteria_results, ts):
 
     pdf.set_font("Helvetica", "I", 8)
     pdf.set_text_color(150, 150, 150)
-    pdf.cell(0, 5, f"StockSense  -  {ts}  -  Not financial advice", align="C", ln=True)
+    pdf.cell(0, 5, f"FundaScore  -  {ts}  -  Not financial advice", align="C", ln=True)
     return bytes(pdf.output())
 
 
@@ -532,7 +532,7 @@ def make_pdf(company, ticker, vtext, vscore, criteria_results, ts):
 # ─────────────────────────────────────────────────────────────────
 def make_md(company, ticker, vtext, vscore, criteria_results, ts):
     lines = [
-        f"# 📊 StockSense: {company} ({ticker.upper()})",
+        f"# 📊 FundaScore: {company} ({ticker.upper()})",
         f"*{ts}*", "",
         "---", "",
         f"## Verdict: {vtext}",
@@ -549,7 +549,7 @@ def make_md(company, ticker, vtext, vscore, criteria_results, ts):
         for lbl, val, asmt in cdetails:
             lines.append(f"| {lbl} | {val} | {asmt} |")
         lines.append("")
-    lines += ["---", "*StockSense · Warren Buffett-style value investing framework*"]
+    lines += ["---", "*FundaScore · Warren Buffett-style value investing framework*"]
     return "\n".join(lines)
 
 
@@ -563,7 +563,7 @@ def main():
     hq, hsrc = st.session_state["header_quote"]
     st.markdown(f"""
     <div style="text-align:center;padding:10px 0 6px;">
-      <h1 style="font-size:2.6rem;margin:0;letter-spacing:-1px;">📊 StockSense</h1>
+      <h1 style="font-size:2.6rem;margin:0;letter-spacing:-1px;">📊 FundaScore</h1>
       <p style="color:#6B7280;font-size:1rem;margin:4px 0 0;">
         Warren Buffett-style analysis · Type a ticker · Get a verdict
       </p>
@@ -665,7 +665,7 @@ def main():
     if quote_type in ("ETF", "MUTUALFUND"):
         fund_label = "ETF" if quote_type == "ETF" else "Mutual Fund"
         st.warning(
-            f"⚠️ **{name} is an {fund_label}** — StockSense is built for individual stocks "
+            f"⚠️ **{name} is an {fund_label}** — FundaScore is built for individual stocks "
             f"using Warren Buffett's framework. Metrics like ROE, ROIC, and Debt/Equity "
             f"don't apply to funds, so the score below will be misleading.\n\n"
             f"**For ETFs, look at:** expense ratio, long-term returns vs benchmark, "
@@ -866,7 +866,7 @@ def main():
         try:
             pdf_bytes = make_pdf(name, ticker, vtext, wdsp, cr_results, ts)
             st.download_button("📄  PDF Report", data=pdf_bytes,
-                               file_name=f"StockSense_{ticker}_{datetime.now():%Y%m%d}.pdf",
+                               file_name=f"FundaScore_{ticker}_{datetime.now():%Y%m%d}.pdf",
                                mime="application/pdf", use_container_width=True)
         except Exception:
             st.button("📄  PDF (unavailable)", disabled=True, use_container_width=True)
@@ -874,7 +874,7 @@ def main():
     with e2:
         md = make_md(name, ticker, vtext, wdsp, cr_results, ts)
         st.download_button("📝  Markdown Report", data=md,
-                           file_name=f"StockSense_{ticker}_{datetime.now():%Y%m%d}.md",
+                           file_name=f"FundaScore_{ticker}_{datetime.now():%Y%m%d}.md",
                            mime="text/markdown", use_container_width=True)
 
     with e3:
@@ -882,7 +882,7 @@ def main():
                    "score": wscore, "verdict": vtext,
                    "criteria": {k: v[0] for k, v in cr_results.items()}}
         st.download_button("📊  JSON Summary", data=json.dumps(summary, indent=2),
-                           file_name=f"StockSense_{ticker}_{datetime.now():%Y%m%d}.json",
+                           file_name=f"FundaScore_{ticker}_{datetime.now():%Y%m%d}.json",
                            mime="application/json", use_container_width=True)
 
 
