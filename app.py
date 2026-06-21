@@ -46,6 +46,20 @@ st.set_page_config(
 )
 
 # ─────────────────────────────────────────────────────────────────
+# GOOGLE ANALYTICS
+# ─────────────────────────────────────────────────────────────────
+st.markdown("""
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5P3G6CKKPW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5P3G6CKKPW');
+</script>
+""", unsafe_allow_html=True)
+
+# ─────────────────────────────────────────────────────────────────
 # GLOBAL STYLES
 # ─────────────────────────────────────────────────────────────────
 st.markdown("""
